@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Lista de jogo</title>
+</h:head>
+<h:form id="form">
+	<div class="card">
+		<p:dataTable var="j" value="#{jogoBean.listar}" editable="true">
+
+			<p:ajax event="rowEdit" listener="#{jogoBean.editar}"
+				update=":form:msgs" />
+
+			<p:column headerText="valores">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{j.v1}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber value="#{j.v1}" label="v1" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="numero sorteado">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{j.numeroSorteado}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber value="#{j.numeroSorteado}" label="numeroSorteado" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="dataCadastro">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{j.dataCadastro}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber value="#{j.dataCadastro}" label="dataCadastro" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column>
+				<p:commandButton value="excluir" action="#{jogoBean.excluir(j)}"
+					update="form" />
+				<f:setPropertyActionListener target="#{jogoBean.jogo}" value="#{j}" />
+			</p:column>
+
+			<p:column>
+				<p:commandButton value="maior"
+					action="#{jogoBean.buscarMaiorNumeroSorteado}"
+					update="maiorNumeroSorteadoLabel" />
+			</p:column>
+
+			<p:column>
+				<h:outputText id="maiorNumeroSorteadoLabel"
+					value="Maior número sorteado: #{listagemBean.maiorNumeroSorteado}" />
+			</p:column>
+
+		</p:dataTable>
+	</div>
+</h:form>
+</h:body>
+</html>
